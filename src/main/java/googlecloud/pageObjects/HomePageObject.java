@@ -1,6 +1,7 @@
 package googlecloud.pageObjects;
 
 import java.util.List;
+import java.util.Locale;
 
 import googlecloud.pageUIs.HomePageUI;
 import org.openqa.selenium.Keys;
@@ -34,15 +35,23 @@ public class HomePageObject extends BaseElement {
 		sendkeyToElement(driver, homePageUI.SEARCH_TEXTBOX, Keys.ENTER);
 	}
 
-	public boolean verifySearchResults(String value) {
-		waitForListElementVisible(driver, homePageUI.SEARCH_RESULTS);
-		List<WebElement> results = getListWebElement(driver, homePageUI.SEARCH_RESULTS);
-		
+	public boolean verifySearchResults(String valueToSearch) {
+		waitForListElementVisible(driver, homePageUI.SEARCH_RESULTS_CONTENT);
+		List<WebElement> results = getListWebElement(driver, homePageUI.SEARCH_RESULTS_CONTENT);
+		String[] values = valueToSearch.split(" ");
+
 		for (WebElement element : results) {
-			if (!element.getText().contains(value)) {
-				System.out.println(element.getText());
-				return false;
+			boolean checked = false;
+			for(String value : values) {
+				if (element.getText().contains(value) || element.getText().contains(value.toLowerCase()) || element.getText().contains(value.toUpperCase())) {
+					checked	= true;
+					break;
+				}
 			}
+
+			if (!checked) {
+				return false;
+            }
 		}
 		return true;
 	}

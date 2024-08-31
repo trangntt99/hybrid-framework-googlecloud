@@ -20,7 +20,7 @@
 			<class name="com.googlecloud.user.GoogleCloud_02_Products" />
 		</classes>
 	</test>
-	
+
 	<test name="Run on Edge">
 		<parameter name="browser" value="edge" />
 		<classes>
